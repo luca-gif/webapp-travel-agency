@@ -1,0 +1,27 @@
+﻿@model PacchettoViaggio
+
+<form class="w-50 m-auto" asp-controller="Admin" asp-action="Update" asp-route-id="@Model.Id" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label for="name">Nome pacchetto</label>
+        <input type="text" class="form-control" asp-for="Name" id="name" placeholder="Inserisci il nome">
+    </div>
+
+    <div class="form-group">
+        <label for="description">Descrizione</label>
+        <input type="text" class="form-control" asp-for="Description" id="description" placeholder="Inserisci una descrizione">
+    </div>
+
+    <div class="form-group">
+        <label for="price">Prezzo</label>
+        <input type="text" class="form-control" asp-for="Price" id="price" placeholder="Inserisci il prezzo">
+    </div>
+
+    <div class="form-group">
+        <label for="date">Data</label>
+        <input type="date" class="form-control" asp-for="Date" id="date">
+    </div>
+ 
+    <button type="submit" class="btn btn-primary mt-2">Submit</button>
+</form>

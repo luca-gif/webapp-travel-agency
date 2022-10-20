@@ -48,6 +48,31 @@ namespace webapp_travel_agency.Controllers
 
         }
 
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            PacchettoViaggio pacchettoDaModificare = _ctx.pacchettiViaggi.Find(id);
+
+            return View("Edit", pacchettoDaModificare);
+        }
+
+        [HttpPost]
+        public IActionResult Update(PacchettoViaggio data)
+        {
+            if (data != null)
+            {
+                _ctx.pacchettiViaggi.Update(data);
+                _ctx.SaveChanges();
+
+                return RedirectToAction("index");
+            }
+
+            else
+            {
+                return NotFound();
+            }
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

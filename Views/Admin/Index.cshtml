@@ -23,6 +23,9 @@
                             <th>@pacchetto.Name</th>
                             <td>@pacchetto.Price</td>
                             <td>@pacchetto.Date</td>
+                            <td>
+                                <a class="btn btn-success btn-sm" href="@Url.Action("Update","Admin", new { id = pacchetto.Id })">Modifica</a>
+                            </td>
                         </tr>
                         }
                     }
