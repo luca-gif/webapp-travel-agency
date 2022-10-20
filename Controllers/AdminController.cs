@@ -23,6 +23,13 @@ namespace webapp_travel_agency.Controllers
             return View(pacchettiViaggi);
         }
 
+        public IActionResult Show(int id)
+        {
+            PacchettoViaggio trip = _ctx.pacchettiViaggi.Find(id);
+
+            return View(trip);
+        }
+
         [HttpGet]
         public IActionResult Create()
         {

@@ -25,6 +25,7 @@
                             <td>@pacchetto.Price</td>
                             <td>@pacchetto.Date</td>
                             <td>
+                                <a class="btn btn-warning btn-sm" href="@Url.Action("Show","Admin", new { id = pacchetto.Id })">Mostra</a>
                                 <a class="btn btn-success btn-sm" href="@Url.Action("Update","Admin", new { id = pacchetto.Id })">Modifica</a>
                            
                                 <form class="d-inline" asp-controller="Admin" asp-action="Delete" method="post" asp-route-id="@pacchetto.Id">
