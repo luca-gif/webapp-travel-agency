@@ -1,8 +1,37 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model List<PacchettoViaggio>;
+
+@{
+    bool isEmpty = !Model.Any();
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@{
+    if(!isEmpty){
+    <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Prezzo</th>
+                        <th scope="col">Partenza</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    @{
+                        foreach (var pacchetto in Model)
+                        {
+                        <tr>
+                            <th>@pacchetto.Name</th>
+                            <td>@pacchetto.Price</td>
+                            <td>@pacchetto.Date</td>
+                        </tr>
+                        }
+                    }
+
+                </tbody>
+    </table>
+    }
+
+    else{
+    <h3>Non ci sono pacchetti da mostrare</h3>
+    }
+}
