@@ -12,6 +12,7 @@
                         <th scope="col">Nome</th>
                         <th scope="col">Prezzo</th>
                         <th scope="col">Partenza</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,6 +26,13 @@
                             <td>@pacchetto.Date</td>
                             <td>
                                 <a class="btn btn-success btn-sm" href="@Url.Action("Update","Admin", new { id = pacchetto.Id })">Modifica</a>
+                           
+                                <form class="d-inline" asp-controller="Admin" asp-action="Delete" method="post" asp-route-id="@pacchetto.Id">
+                                    @Html.AntiForgeryToken()
+
+                                    <button class="btn btn-danger btn-sm" type="submit">Elimina</button>
+                                </form>
+
                             </td>
                         </tr>
                         }
