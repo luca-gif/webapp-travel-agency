@@ -1,15 +1,15 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using webapp_travel_agency.Areas.Identity.Data;
+using webapp_travel_agency.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("AgencyTravelConnection") ?? throw new InvalidOperationException("Connection string 'AgencyTravelConnection' not found.");
 
-builder.Services.AddDbContext<AgencyTravel>(options =>
+builder.Services.AddDbContext<AgencyContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<AgencyTravel>();
+    .AddEntityFrameworkStores<AgencyContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();

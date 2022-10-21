@@ -10,7 +10,7 @@ namespace webapp_travel_agency.Controllers.Api
     {
         private readonly AgencyContext _ctx = new AgencyContext();
 
-        // POST api/<MessagesController>
+
         [HttpPost]
         public IActionResult Send([FromBody] Info message)
         {
