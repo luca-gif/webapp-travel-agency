@@ -29,9 +29,17 @@ namespace webapp_travel_agency.Controllers.Api
 
         public IActionResult Detail(int? id)
         {
-            PacchettoViaggio trip = _ctx.pacchettiViaggi.Where(trip => trip.Id == id).FirstOrDefault();
+            if (id == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                PacchettoViaggio trip = _ctx.pacchettiViaggi.Where(trip => trip.Id == id).FirstOrDefault();
 
-            return Ok(trip);
+                return Ok(trip);
+            }
+
         }
     }
 }

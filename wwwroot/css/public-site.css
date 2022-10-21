@@ -17,11 +17,46 @@ body {
   margin-bottom: 60px;
 }
 
+.banner {
+    background-image: url("https://strapi-imaginary.weroad.it/resource/cover/25792/cuba-strada-tramonto-marzo-inverno-weroad.jpeg");
+    height: 400px;
+    background-position: center;
+    background-size: cover;
+    margin: -120px;
+    margin-bottom: 20px;
+}
 
-.wrapper .card{
+nav {
+    background-color: transparent;
+    padding: 0 !important;
+}
+
+.navbar-collapse li {
+    background-color: #1c1c1c;
+    height: 35px;
+    border-radius: 35px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand img{
+    width: 100px;
+}
+
+.wrapper .card {
     height: 350px;
 }
 
 .wrapper .card .card-img-top {
     height: 130px;
+}
+
+.trip-detail .image img{
+    width: 600px;
+    height: 400px;
+}
+
+.col-6 form {
+    width: 70%;
 }
