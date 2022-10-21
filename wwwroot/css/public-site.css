@@ -16,3 +16,12 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+.wrapper .card{
+    height: 350px;
+}
+
+.wrapper .card .card-img-top {
+    height: 130px;
+}

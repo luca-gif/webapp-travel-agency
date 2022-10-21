@@ -1,0 +1,35 @@
+﻿@{
+    Layout = "_LayoutHome";
+}
+
+<div class="trip-detail d-flex"> 
+    
+    <div class="image"></div>
+
+    <div class="text"></div>
+</div>
+
+<script>
+
+    const id= window.location.pathname.split("/")[3];
+
+    axios.get("/Api/Trips/Detail", {
+        params: {
+            id
+        }
+    })
+
+    .then(r => {
+
+        let trip = r.data;
+
+            $('.image')[0].innerHTML = `<img src="${trip.image}" />`
+
+            $('.text')[0].innerHTML = `${trip.name} ${trip.description} ${trip.price} ${trip.date}`
+
+    })
+    .catch(e =>{
+        console.log(e.message);
+    })
+
+</script>

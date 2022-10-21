@@ -70,15 +70,17 @@
         $('.wrapper')[0].innerHTML += `
 
             <div class="col-2">
-                <div class="card">
-                        <img class="card-img-top" src="${trip.image}" alt="${trip.name}" title="${trip.name}">
-                    <div class="card-body">
-                        <h5 class="card-title">${trip.name}</h5>
-                        <p class="card-text">${trip.date}</p>
-                        <p class="card-text">${trip.description}</p>
-                        <p class="card-text">${trip.price}</p>
+                    <div class="card">
+                        <a href="/guest/detail/${trip.id}">
+                            <img class="card-img-top" src="${trip.image}" alt="${trip.name}" title="${trip.name}">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">${trip.name}</h5>
+                            <p class="card-text">${trip.date}</p>
+                            <p class="card-text">${trip.description}</p>
+                            <p class="card-text">${trip.price}</p>
+                        </div>
                     </div>
-                </div>
             </div>`
     }
 
