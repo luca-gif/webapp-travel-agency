@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using webapp_travel_agency.Models;
 
 namespace webapp_travel_agency.Context
 {
-    public class AgencyContext : DbContext
+    public class AgencyContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<PacchettoViaggio> pacchettiViaggi { get; set; }
 

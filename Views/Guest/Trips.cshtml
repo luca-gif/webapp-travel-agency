@@ -1,0 +1,85 @@
+﻿@{
+    Layout = "_LayoutHome";
+}
+
+<div class="input-group mb-3 w-25">
+    <div class="input-group-prepend">
+        <span class="input-group-text h-100"> <i class="fa-solid fa-magnifying-glass"></i> </span>
+    </div>
+
+    <input type="text" id="search" class="form-control w-25 shadow-none" placeholder="Cerca il tuo viaggio...">
+
+</div>
+
+<div class="row wrapper"></div>
+
+
+<script>
+
+    let trips = [];
+    axiosCall();
+
+    // ricerca per nome
+
+    document.getElementById('search').addEventListener("keyup", findTrip); //fare in jQuery !!
+
+
+    function findTrip(){
+
+        if(event.key === "Enter"){
+
+            let nameOfTrip = this.value.trim();
+
+            axiosCall(nameOfTrip);
+        }
+    }
+
+    // chiamata axios
+
+    function axiosCall(nameToFind) {
+
+        axios.get("/Api/Trips/Get", {
+            params: {
+                tripName: nameToFind
+            }
+        })
+            .then((r) => {
+
+                trips = r.data;
+
+                $('.wrapper')[0].innerHTML = "";
+
+                trips.forEach(trip => {
+
+                    cardPrinter(trip); //stampa i viaggi
+
+                })
+
+            })
+            .catch(e => {
+
+                console.log(e.message)
+            })
+    }
+
+
+    // funzione che stampa nella chiamata
+
+    function cardPrinter(trip) {
+
+        $('.wrapper')[0].innerHTML += `
+
+            <div class="col-2">
+                <div class="card">
+                        <img class="card-img-top" src="${trip.image}" alt="${trip.name}" title="${trip.name}">
+                    <div class="card-body">
+                        <h5 class="card-title">${trip.name}</h5>
+                        <p class="card-text">${trip.date}</p>
+                        <p class="card-text">${trip.description}</p>
+                        <p class="card-text">${trip.price}</p>
+                    </div>
+                </div>
+            </div>`
+    }
+
+</script> 

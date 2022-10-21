@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using webapp_travel_agency.Context;
 using webapp_travel_agency.Models;
 
 namespace webapp_travel_agency.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly AgencyContext _ctx = new AgencyContext();
