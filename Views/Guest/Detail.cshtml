@@ -6,8 +6,7 @@
 
     <div class="col-6 trip-detail">
 
-        <div class="image">
-        </div>
+        <div class="image"></div>
         <div class="text"></div>
 
     </div>
@@ -46,9 +45,10 @@
 
 <script>
 
+    const id = window.location.pathname.split("/")[3];
+
     function sendMessage(e){
 
-        const id = window.location.pathname.split("/")[3];
 
         e.preventDefault();
 

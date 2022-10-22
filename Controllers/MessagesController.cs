@@ -12,7 +12,7 @@ namespace webapp_travel_agency.Controllers
         {
             AgencyContext _ctx = new AgencyContext();
 
-            List<Info> messages = _ctx.informazioni.Include("PacchettoViaggio").ToList();
+            List<Info> messages = _ctx.informazioni.Include("PacchettoViaggio").OrderByDescending(m => m.Id).ToList();
 
             return View("Messages", messages);
         }
