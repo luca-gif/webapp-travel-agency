@@ -48,6 +48,8 @@
 
     function sendMessage(e){
 
+        const id = window.location.pathname.split("/")[3];
+
         e.preventDefault();
 
         axios.post("/Api/Messages/Send", {
@@ -56,6 +58,7 @@
             customerEmail:  $('#email')[0].value,
             title: $('#title')[0].value,
             content: $('#content')[0].value,
+            pacchettoViaggioId: id
            
         })
         .then(r => {
@@ -73,8 +76,7 @@
     }
 
 
-    const id= window.location.pathname.split("/")[3];
-
+    
     axios.get("/Api/Trips/Detail", {
         params: {
             id

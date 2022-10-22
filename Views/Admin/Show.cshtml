@@ -8,6 +8,52 @@
         <p class="card-text">@Model.Description</p>
         <p class="card-text">€ @Model.Price</p>
         <p class="card-text">@Model.Date</p>
+       
         <a href="@Url.Action("Index", "Admin")" class="btn btn-primary">Indietro</a>
     </div>
 </div>
+
+@{
+    if (Model.Messages.Any())
+    {
+
+        <table class="table mt-5">
+            <thead>
+                <tr>
+                    <th scope="col">Titolo</th>
+                    <th scope="col">Messaggio</th>
+                    <th scope="col">Nome cliente</th>
+                    <th scope="col">Email cliente</th>
+                    <th scope="col">Data e ora</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+
+                @foreach (var msg in @Model.Messages)
+                {
+                    <tr>
+                        <td>@msg.Title</td>
+                        <td>@msg.Content</td>
+                        <td>@msg.CustomerName</td>
+                        <td>@msg.CustomerEmail</td>
+                        <td>@msg.Created</td>
+                        <td>
+
+                            <form class="d-inline" asp-controller="Messages" asp-action="Delete" method="post" asp-route-id="@msg.Id">
+                                @Html.AntiForgeryToken()
+
+                                <button onclick="return confirm('Vuoi eliminare questo messaggio?')" class="btn btn-danger btn-sm" type="submit">Elimina</button>
+                            </form>
+
+                        </td>
+                    </tr>
+                }
+
+                
+
+            </tbody>
+        </table>
+    }
+}

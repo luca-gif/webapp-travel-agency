@@ -16,6 +16,7 @@ namespace webapp_travel_agency.Controllers.Guest
 
         public IActionResult Detail()
         {
+
             return View();
         }
     }
