@@ -7,7 +7,7 @@
         <h5 class="card-title">@Model.Name</h5>
         <p class="card-text">@Model.Description</p>
         <p class="card-text">€ @Model.Price</p>
-        <p class="card-text">@Model.Date</p>
+        <p class="card-text">@Model.Date.ToString("dd/MM/yyyy")</p>
        
         <a href="@Url.Action("Index", "Admin")" class="btn btn-primary">Indietro</a>
     </div>
@@ -35,7 +35,7 @@
                 {
                     <tr>
                         <td>@msg.Title</td>
-                        <td>@msg.Content</td>
+                        <td><a href="@Url.Action("ShowMessage","Messages" , new { id = msg.Id })">@GetPartOfContent()</a></td>
                         <td>@msg.CustomerName</td>
                         <td>@msg.CustomerEmail</td>
                         <td>@msg.Created</td>
@@ -49,6 +49,23 @@
 
                         </td>
                     </tr>
+
+                    string GetPartOfContent()
+                    {
+
+                        int titleLength = msg.Content.Length;
+                        int maxLength = 35;
+
+                        if (titleLength < maxLength)
+                        {
+                            return msg.Content.Substring(0, titleLength).Trim();
+                        }
+                        else
+                        {
+                            return msg.Content.Substring(0, maxLength).Trim() + "...";
+                        }
+
+                    }
                 }
 
                 

@@ -7,49 +7,64 @@
 @{
     if (!isEmpty)
     {
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Titolo</th>
-                    <th scope="col">Messaggio</th>
-                    <th scope="col">Nome cliente</th>
-                    <th scope="col">Email cliente</th>
-                    <th scope="col">Data e ora</th>
-                    <th scope="col">Nome pacchetto</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
+    <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Titolo</th>
+                        <th scope="col">Messaggio</th>
+                        <th scope="col">Nome cliente</th>
+                        <th scope="col">Email cliente</th>
+                        <th scope="col">Data e ora</th>
+                        <th scope="col">Nome pacchetto</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                @{
+                    @{
                     foreach (var msg in Model)
                     {
-                        <tr>
-                            <td>@msg.Title</td>
-                            <td>@msg.Content</td>
-                            <td>@msg.CustomerName</td>
-                            <td>@msg.CustomerEmail</td>
-                            <td>@msg.Created</td>
-                            <td>@msg.PacchettoViaggio.Name</td>
-                            <td>
-                                
-                                <form class="d-inline" asp-controller="Messages" asp-action="Delete" method="post" asp-route-id="@msg.Id">
-                                    @Html.AntiForgeryToken()
+                                <tr>
+                                    <td>@msg.Title</td>
+                            <td><a href="@Url.Action("ShowMessage", new { id = msg.Id })">@GetPartOfContent()</a></td>
+                                    <td>@msg.CustomerName</td>
+                                    <td>@msg.CustomerEmail</td>
+                                    <td>@msg.Created</td>
+                                    <td>@msg.PacchettoViaggio?.Name</td>
+                                    <td>
+                                        
+                                        <form class="d-inline" asp-controller="Messages" asp-action="Delete" method="post" asp-route-id="@msg.Id">
+                                            @Html.AntiForgeryToken()
 
-                                    <button onclick="return confirm('Vuoi eliminare questo messaggio?')" class="btn btn-danger btn-sm" type="submit">Elimina</button>
-                                </form>
+                                            <button onclick="return confirm('Vuoi eliminare questo messaggio?')" class="btn btn-danger btn-sm" type="submit">Elimina</button>
+                                        </form>
 
-                            </td>
+                                    </td>
                         </tr>
-                    }
-                }
 
-            </tbody>
-        </table>
+                        string GetPartOfContent(){
+
+                            int titleLength = msg.Content.Length;
+                            int maxLength = 35;
+
+                            if (titleLength < maxLength)
+                            {
+                                return msg.Content.Substring(0, titleLength).Trim();
+                            }
+                            else{
+                                return msg.Content.Substring(0, maxLength).Trim() + "...";
+                            }
+
+                        }
+                    }
+                    }
+
+                </tbody>
+    </table>
     }
 
     else
     {
-        <h3>Non ci sono pacchetti da mostrare</h3>
+    <h3>Non ci sono pacchetti da mostrare</h3>
     }
 }

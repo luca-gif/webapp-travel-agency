@@ -17,6 +17,13 @@ namespace webapp_travel_agency.Controllers
             return View("Messages", messages);
         }
 
+        public IActionResult ShowMessage(int id)
+        {
+            Info msg = _ctx.informazioni.Where(msg => msg.Id == id).Include("PacchettoViaggio").FirstOrDefault();
+
+            return View("MessageDetail", msg);
+        }
+
         public IActionResult Delete(int id)
         {
             Info msgToDelete = _ctx.informazioni.Where(msg => msg.Id == id).FirstOrDefault();
