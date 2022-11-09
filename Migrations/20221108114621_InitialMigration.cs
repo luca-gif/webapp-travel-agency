@@ -1,11 +1,10 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace webapp_travel_agency.Migrations
 {
-    public partial class relationsT : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,20 +48,16 @@ namespace webapp_travel_agency.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "pacchettiViaggi",
+                name: "categorie",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_pacchettiViaggi", x => x.Id);
+                    table.PrimaryKey("PK_categorie", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -172,6 +167,30 @@ namespace webapp_travel_agency.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "pacchettiViaggi",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CategoriaId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_pacchettiViaggi", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_pacchettiViaggi_categorie_CategoriaId",
+                        column: x => x.CategoriaId,
+                        principalTable: "categorie",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "informazioni",
                 columns: table => new
                 {
@@ -237,6 +256,11 @@ namespace webapp_travel_agency.Migrations
                 name: "IX_informazioni_PacchettoViaggioId",
                 table: "informazioni",
                 column: "PacchettoViaggioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_pacchettiViaggi_CategoriaId",
+                table: "pacchettiViaggi",
+                column: "CategoriaId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -267,6 +291,9 @@ namespace webapp_travel_agency.Migrations
 
             migrationBuilder.DropTable(
                 name: "pacchettiViaggi");
+
+            migrationBuilder.DropTable(
+                name: "categorie");
         }
     }
 }

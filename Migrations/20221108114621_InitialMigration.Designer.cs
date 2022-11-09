@@ -12,8 +12,8 @@ using webapp_travel_agency.Context;
 namespace webapp_travel_agency.Migrations
 {
     [DbContext(typeof(AgencyContext))]
-    [Migration("20221021143459_relationsT")]
-    partial class relationsT
+    [Migration("20221108114621_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -226,6 +226,23 @@ namespace webapp_travel_agency.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("webapp_travel_agency.Models.Categoria", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("categorie");
+                });
+
             modelBuilder.Entity("webapp_travel_agency.Models.Info", b =>
                 {
                     b.Property<int>("Id")
@@ -271,6 +288,9 @@ namespace webapp_travel_agency.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("CategoriaId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -289,6 +309,8 @@ namespace webapp_travel_agency.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoriaId");
 
                     b.ToTable("pacchettiViaggi");
                 });
@@ -350,6 +372,22 @@ namespace webapp_travel_agency.Migrations
                         .WithMany("Messages")
                         .HasForeignKey("PacchettoViaggioId");
 
+                    b.Navigation("PacchettoViaggio");
+                });
+
+            modelBuilder.Entity("webapp_travel_agency.Models.PacchettoViaggio", b =>
+                {
+                    b.HasOne("webapp_travel_agency.Models.Categoria", "Categoria")
+                        .WithMany("PacchettoViaggio")
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categoria");
+                });
+
+            modelBuilder.Entity("webapp_travel_agency.Models.Categoria", b =>
+                {
                     b.Navigation("PacchettoViaggio");
                 });
 

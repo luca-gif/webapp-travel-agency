@@ -26,6 +26,33 @@ namespace webapp_travel_agency.Controllers.Api
             return Ok(trips.ToList());
         }
 
+        public IActionResult Categories(int? id)
+        {
+            List<Categoria> categories = new List<Categoria>();
+
+            categories = _ctx.categorie.ToList();
+
+            return Ok(categories.ToList());
+        }
+
+        // Ricerca per categoria
+
+        public IActionResult GetByCategory(int? id)
+        {
+            List<PacchettoViaggio> trips = new List<PacchettoViaggio>();
+
+            if (id != 0)
+            {
+                trips = _ctx.pacchettiViaggi.Where(t => t.CategoriaId == id).ToList();
+            }
+            else
+            {
+                trips = _ctx.pacchettiViaggi.ToList();
+            }
+
+            return Ok(trips.ToList());
+        }
+
 
         public IActionResult Detail(int? id)
         {

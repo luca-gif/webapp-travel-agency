@@ -21,14 +21,14 @@ namespace webapp_travel_agency.Controllers
 
         public IActionResult Index()
         {
-            List<PacchettoViaggio> pacchettiViaggi = _ctx.pacchettiViaggi.ToList();
+            List<PacchettoViaggio> pacchettiViaggi = _ctx.pacchettiViaggi.Include("Categoria").ToList();
 
             return View(pacchettiViaggi);
         }
 
         public IActionResult Show(int id)
         {
-            PacchettoViaggio trip = _ctx.pacchettiViaggi.Include("Messages").Where(t => t.Id == id).FirstOrDefault();
+            PacchettoViaggio trip = _ctx.pacchettiViaggi.Include("Categoria").Include("Messages").Where(t => t.Id == id).FirstOrDefault();
 
             return View(trip);
         }
@@ -36,42 +36,59 @@ namespace webapp_travel_agency.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            PacchettoViaggio pacchetto = new PacchettoViaggio();
+            Wrapper wrapper = new Wrapper();
 
-            return View(pacchetto);
+            wrapper.PacchettoViaggio = new PacchettoViaggio();
+            wrapper.Categoria = _ctx.categorie.ToList();
+
+            return View(wrapper);
         }
 
         [HttpPost]
-        public IActionResult Create(PacchettoViaggio data)
+        public IActionResult Create(Wrapper data)
         {
-            if (data != null)
+            if (!ModelState.IsValid)
             {
-                _ctx.pacchettiViaggi.Add(data);
-                _ctx.SaveChanges();
+                data.Categoria = _ctx.categorie.ToList();
 
-                return RedirectToAction("index");
+                return View(data);
             }
-            else
-            {
-                return NotFound("Ci sono degli errori");
-            }
+
+
+            _ctx.pacchettiViaggi.Add(data.PacchettoViaggio);
+
+            _ctx.SaveChanges();
+
+            return RedirectToAction("Index");
 
         }
 
         [HttpGet]
         public IActionResult Update(int id)
         {
-            PacchettoViaggio pacchettoDaModificare = _ctx.pacchettiViaggi.Find(id);
+            Wrapper wrapper = new Wrapper();
 
-            return View("Edit", pacchettoDaModificare);
+            wrapper.PacchettoViaggio = _ctx.pacchettiViaggi.Find(id);
+            wrapper.Categoria = _ctx.categorie.ToList();
+
+            return View("Edit", wrapper);
         }
 
         [HttpPost]
-        public IActionResult Update(PacchettoViaggio data)
+        public IActionResult Update(int id, Wrapper data)
         {
-            if (data != null)
+            data.Categoria = _ctx.categorie.ToList();
+
+            if (ModelState.IsValid)
             {
-                _ctx.pacchettiViaggi.Update(data);
+                PacchettoViaggio pacchettoDaModificare = _ctx.pacchettiViaggi.Where(p => p.Id == id).FirstOrDefault();
+
+                pacchettoDaModificare.Name = data.PacchettoViaggio.Name;
+                pacchettoDaModificare.Image = data.PacchettoViaggio.Image;
+                pacchettoDaModificare.Price = data.PacchettoViaggio.Price;
+                pacchettoDaModificare.Description = data.PacchettoViaggio.Description;
+                pacchettoDaModificare.Date = data.PacchettoViaggio.Date;
+                pacchettoDaModificare.CategoriaId = data.PacchettoViaggio.CategoriaId;
                 _ctx.SaveChanges();
 
                 return RedirectToAction("index");
@@ -79,6 +96,8 @@ namespace webapp_travel_agency.Controllers
 
             else
             {
+                data.Categoria = _ctx.categorie.ToList();
+
                 return NotFound();
             }
         }

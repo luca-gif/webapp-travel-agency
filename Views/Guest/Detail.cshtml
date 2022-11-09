@@ -19,21 +19,25 @@
             <div class="form-group">
                 <label for="name">Nome</label>
                 <input type="text" class="form-control shadow-none" id="name" placeholder="Inserisci il nome">
+                <span class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label for="email">Email address</label>
-                <input type="text" class="form-control shadow-none" id="email" placeholder="Inserisci la tua email">
+                <input type="email" class="form-control shadow-none" id="email" placeholder="Inserisci la tua email">
+                <span class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label for="title">Titolo</label>
                 <input type="text" class="form-control shadow-none" id="title" placeholder="Inserisci il titolo">
+                <span class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label class="form-check-label" for="content">Messaggio</label>
                 <textarea class="form-control shadow-none" rows="6" id="content" placeholder="Scrivi qualcosa..."></textarea>
+                <span class="text-danger"></span>
             </div>
 
             <button type="submit" class="btn btn-secondary my-2">Invia</button>
@@ -67,11 +71,14 @@
 
                 console.log(r.data)
             alert("Messaggio inviato")
+ 
         })
         .catch(e => {
 
-            console.log(e)
-                alert("Messaggio non inviato")
+                console.log(e.response.data.errors)
+
+               alert('Messaggio non inviato');
+             
         })
     }
 

@@ -8,6 +8,7 @@ namespace webapp_travel_agency.Controllers
     public class MessagesController : Controller
     {
         private readonly AgencyContext _ctx = new AgencyContext();
+
         public IActionResult Index()
         {
             AgencyContext _ctx = new AgencyContext();

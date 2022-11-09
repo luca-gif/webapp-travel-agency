@@ -2,7 +2,10 @@
     Layout = "_LayoutHome";
 }
 
-<div class="input-group mb-3 w-25">
+<div class="command-container d-flex  mb-3">
+
+    <div class="input-group w-25">
+
     <div class="input-group-prepend">
         <span class="input-group-text h-100"> <i class="fa-solid fa-magnifying-glass"></i> </span>
     </div>
@@ -11,13 +14,81 @@
 
 </div>
 
+    <select class="form-select w-25 shadow-none mx-3" id="categories">
+
+        <option value="0">Tutti i pacchetti</option>
+
+    </select>
+
+</div>
+    
+
+
 <div class="row wrapper"></div>
 
 
 <script>
 
     let trips = [];
+    let idCategory = 0;
     axiosCall();
+
+    // tutte le categorie
+
+    axios.get("/Api/Trips/Categories")
+        .then((r) => {
+
+            categories = r.data;
+
+             categories.forEach(category => {
+
+                $('#categories')[0].innerHTML += `<option id="opt" value="${category.id}">${category.name}</option>`
+
+            })
+
+        })
+        .catch(e => {
+
+            console.log(e.message)
+        })
+
+        // creo evento al change della select
+
+         document.getElementById('categories').addEventListener('change', function(){
+
+            idCategory = $('#categories')[0].value;
+         
+
+        // ricerca per categoria
+
+        axios.get("/Api/Trips/GetByCategory", {
+            params: {
+                id: idCategory
+            }
+        })
+            .then((r) => {
+
+                trips = r.data;
+
+                console.log(trips);
+
+                $('.wrapper')[0].innerHTML = "";
+
+                trips.forEach(trip => {
+
+                    cardPrinter(trip); //stampa i viaggi
+
+                })
+
+            })
+            .catch(e => {
+
+                console.log(e.message)
+            })
+
+               })
+    
+ 
 
     // ricerca per nome
 
@@ -28,9 +99,9 @@
 
         if(event.key === "Enter"){
 
-            let nameOfTrip = this.value.trim();
+            let nameToFind = this.value.trim();
 
-            axiosCall(nameOfTrip);
+            axiosCall(nameToFind);
         }
     }
 
@@ -82,6 +153,7 @@
                         </div>
                     </div>
             </div>`
+
     }
 
 </script> 

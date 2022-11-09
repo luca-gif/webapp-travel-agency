@@ -8,7 +8,9 @@ namespace webapp_travel_agency.Context
     public class AgencyContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<PacchettoViaggio> pacchettiViaggi { get; set; }
+        public DbSet<Categoria> categorie { get; set; }
         public DbSet<Info> informazioni { get; set; }
+
 
         public AgencyContext(DbContextOptions<AgencyContext> options)
        : base(options)

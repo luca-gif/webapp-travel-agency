@@ -12,6 +12,7 @@
                         <th scope="col">Nome</th>
                         <th scope="col">Prezzo</th>
                         <th scope="col">Partenza</th>
+                        <th scope="col">Continente</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -22,11 +23,12 @@
                         {
                         <tr>
                             <th>@pacchetto.Name</th>
-                            <td>@pacchetto.Price</td>
+                            <td>€ @pacchetto.Price</td>
                             <td>@pacchetto.Date.ToString("dd/MM/yyyy")</td>
+                            <td>@pacchetto.Categoria.Name</td>
                             <td>
                                 <a class="btn btn-warning btn-sm" href="@Url.Action("Show","Admin", new { id = pacchetto.Id })">Mostra</a>
-                                <a class="btn btn-success btn-sm" href="@Url.Action("Update","Admin", new { id = pacchetto.Id })">Modifica</a>
+                                <a class="btn btn-primary btn-sm" href="@Url.Action("Update","Admin", new { id = pacchetto.Id })">Modifica</a>
                            
                                 <form class="d-inline" asp-controller="Admin" asp-action="Delete" method="post" asp-route-id="@pacchetto.Id">
                                     @Html.AntiForgeryToken()

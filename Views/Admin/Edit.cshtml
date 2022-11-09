@@ -1,32 +1,57 @@
-﻿@model PacchettoViaggio
+﻿@model Wrapper
 
-<form class="w-50 m-auto" asp-controller="Admin" asp-action="Update" asp-route-id="@Model.Id" method="post">
+
+<form class="w-50 m-auto" asp-controller="Admin" asp-action="Update" asp-route-id="@Model.PacchettoViaggio.Id" method="post">
     @Html.AntiForgeryToken()
 
     <div class="form-group">
         <label for="image">Immagine</label>
-        <input type="text" class="form-control" asp-for="Image" id="image" placeholder="Inserisci l'url dell' immagine">
+        <input type="text" class="form-control shadow-none" asp-for="PacchettoViaggio.Image" id="image" placeholder="Inserisci l'url dell' immagine">
+        <span class="text-danger" asp-validation-for="PacchettoViaggio.Image"></span>
     </div>
 
     <div class="form-group">
         <label for="name">Nome pacchetto</label>
-        <input type="text" class="form-control" asp-for="Name" id="name" placeholder="Inserisci il nome">
+        <input type="text" class="form-control shadow-none" asp-for="PacchettoViaggio.Name" id="name" placeholder="Inserisci il nome">
+        <span class="text-danger" asp-validation-for="PacchettoViaggio.Name"></span>
     </div>
 
     <div class="form-group">
         <label for="description">Descrizione</label>
-        <input type="text" class="form-control" asp-for="Description" id="description" placeholder="Inserisci una descrizione">
+        <input type="text" class="form-control shadow-none" asp-for="PacchettoViaggio.Description" id="description" placeholder="Inserisci una descrizione">
+        <span class="text-danger" asp-validation-for="PacchettoViaggio.Description"></span>
+    </div>
+
+    <div class="form-group">
+        <label>Continente</label>
+        <select class="form-select shadow-none" asp-for="PacchettoViaggio.CategoriaId">
+
+            @foreach (var category in Model.Categoria)
+            {
+                <option value="@category.Id">@category.Name</option>
+            }
+
+        </select>
     </div>
 
     <div class="form-group">
         <label for="price">Prezzo</label>
-        <input type="text" class="form-control" asp-for="Price" id="price" placeholder="Inserisci il prezzo">
+        <input type="text" class="form-control shadow-none" asp-for="PacchettoViaggio.Price" id="price" placeholder="Inserisci il prezzo">
+        <span class="text-danger" asp-validation-for="PacchettoViaggio.Price"></span>
     </div>
 
     <div class="form-group">
         <label for="date">Data</label>
-        <input type="date" class="form-control" asp-for="Date" id="date">
+        <input type="date" class="form-control shadow-none" asp-for="PacchettoViaggio.Date" id="date">
+        <span class="text-danger" asp-validation-for="PacchettoViaggio.Date"></span>
     </div>
- 
+
     <button type="submit" class="btn btn-primary mt-2">Submit</button>
 </form>
+
+
+<script>
+
+    document.getElementById('date').valueAsDate = new Date();
+
+</script>
